@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="style17.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гра: Хто виграє?</title>
+    <script>
+    let score1 = 0;
+    let score2 = 0;
+    let totalWins1 = 0;
+    let totalWins2 = 0;
+
+    function Game() {
+        let roll1 = Math.floor(Math.random() * 6) + 1;
+        let roll2 = Math.floor(Math.random() * 6) + 1;
+
+        document.getElementById("dice1").src = `dice${roll1}.png`;
+        document.getElementById("dice2").src = `dice${roll2}.png`;
+
+        if (roll1 > roll2) {
+            score1++;
+            document.getElementById("result").innerHTML = `<p>${document.getElementById("playerName1").innerText} отримує бал!</p>`;
+        } else if (roll1 < roll2) {
+            score2++;
+            document.getElementById("result").innerHTML = `<p>${document.getElementById("playerName2").innerText} отримує бал!</p>`;
+        } else {
+            document.getElementById("result").innerHTML = "<p>Нічия! Ніхто не отримує бал.</p>";
+        }
+
+        document.getElementById("score1").innerText = score1;
+        document.getElementById("score2").innerText = score2;
+
+        if (score1 === 3) {
+            totalWins1++;
+            document.getElementById("result").innerHTML = `<p>${document.getElementById("playerName1").innerText} виграв гру!</p>`;
+            updateWins();
+            resetGame();
+        } else if (score2 === 3) {
+            totalWins2++;
+            document.getElementById("result").innerHTML = `<p>${document.getElementById("playerName2").innerText} виграв гру!</p>`;
+            updateWins();
+            resetGame();
+        }
+    }
+
+    function resetGame() {
+        score1 = 0;
+        score2 = 0;
+        document.getElementById("score1").innerText = score1;
+        document.getElementById("score2").innerText = score2;
+    }
+
+    function newGame() {
+        totalWins1=0;
+        totalWins2=0;
+        resetGame();
+        document.getElementById("result").innerHTML = "<p>Нова гра почалась!</p>";
+    }
+
+    function updateWins() {
+        document.getElementById("totalWins1").innerHTML = "Перемог:"+ totalWins1;
+        document.getElementById("totalWins2").innerHTML = "Перемог:"+ totalWins2;
+    }
+
+    function editNames() {
+        let playerName1 = prompt("Введіть нове ім'я для першого гравця", "Гравець 1");
+        let playerName2 = prompt("Введіть нове ім'я для другого гравця", "Гравець 2");
+        if (playerName1) 
+document.getElementById("playerName1").innerText = playerName1;
+        if (playerName2) 
+document.getElementById("playerName2").innerText = playerName2;
+    }
+    </script>
+</head>
+<body>
+    <div class="game-container">
+<h1>Почніть гру!</h1>
+<div id="result"></div>
+<div class="container">
+    <div class="player">
+        <div class="scoreBox" id="score1">0</div>
+        <img id="dice1" src="dice1.png" alt="Кубик Гравця 1" class="dice">
+        <p id="playerName1">Гравець 1</p>
+        <p id="totalWins1">Перемог: 0</p>
+    </div>
+
+    <div class="player">
+        <div class="scoreBox" id="score2">0</div>
+        <img id="dice2" src="dice1.png" alt="Кубик Гравця 2" class="dice">
+        <p id="playerName2">Гравець 2</p>
+        <p id="totalWins2">Перемог: 0</p>
+    </div>
+</div>
+<button class="button" onclick="Game()">Кинути кубики</button>
+<button class="button" onclick="newGame()">Почати нову гру</button>
+<button onclick="editNames()" class="button">Змінити імена</button>
+</div>
+</body>
+</html>
